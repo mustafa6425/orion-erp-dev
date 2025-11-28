@@ -1,0 +1,13 @@
+[1mdiff --git a/orion-api/app/main.py b/orion-api/app/main.py[m
+[1mindex 2d8a4a2..7edc517 100644[m
+[1m--- a/orion-api/app/main.py[m
+[1m+++ b/orion-api/app/main.py[m
+[36m@@ -30,7 +30,7 @@[m [mdef list_companies():[m
+     # DB'ye bağlan, tabloyu oku, JSON olarak döndür[m
+     with psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor) as conn:[m
+         with conn.cursor() as cur:[m
+[31m-            cur.execute("SELECT id, name, tax_no FROM companies ORDER BY id;")[m
+[32m+[m[32m            cur.execute("SELECT id, name, tax_no, 'ERP' AS source FROM companies ORDER BY id;")[m
+             rows = cur.fetchall()[m
+     return rows[m
+ [m
