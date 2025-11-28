@@ -1,0 +1,42 @@
+services:
+  db:
+    image: postgres:16
+    container_name: orion-db
+    environment:
+      - POSTGRES_DB=orion_db
+      - POSTGRES_USER=orion_user
+      - POSTGRES_PASSWORD=orion_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - orion-net
+
+  api:
+    build: ./orion-api
+    container_name: orion-api
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://orion_user:orion_pass@db:5432/orion_db
+    ports:
+      - "8000:8000"
+    networks:
+      - orion-net
+
+  web:
+    build: ./orion-web
+    container_name: orion-web
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+    networks:
+      - orion-net
+
+volumes:
+  db_data:
+
+networks:
+  orion-net:
