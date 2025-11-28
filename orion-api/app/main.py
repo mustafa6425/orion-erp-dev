@@ -30,7 +30,7 @@ def list_companies():
     # DB'ye bağlan, tabloyu oku, JSON olarak döndür
     with psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor) as conn:
         with conn.cursor() as cur:
-            cur.execute("SELECT id, name, tax_no FROM companies ORDER BY id;")
+            cur.execute("SELECT id, name, tax_no, 'ERP' AS source FROM companies ORDER BY id;")
             rows = cur.fetchall()
     return rows
 
